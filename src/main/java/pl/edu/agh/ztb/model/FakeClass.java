@@ -1,12 +1,9 @@
 package pl.edu.agh.ztb.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Created by wawek on 03.01.15.
  */
 
-@XmlRootElement
 public class FakeClass {
 
     private int someNumber;
@@ -19,5 +16,27 @@ public class FakeClass {
     public FakeClass(int someNumber, String someString) {
         this.someNumber = someNumber;
         this.someString = someString;
+    }
+
+    public String getSomeString() {
+        return someString;
+    }
+
+    public void setSomeString(String someString) {
+        this.someString = someString;
+    }
+
+    public int getSomeNumber() {
+        return someNumber;
+    }
+
+    public void setSomeNumber(int someNumber) {
+        this.someNumber = someNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "someNumber = " + someNumber +
+                " someString = " + someString;
     }
 }
