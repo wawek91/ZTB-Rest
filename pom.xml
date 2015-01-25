@@ -49,6 +49,13 @@
             <version>1.0</version>
             <systemPath>${basedir}/lib/ControlRules.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>ztbmod2</groupId>
+            <artifactId>ztbmod2</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/lib/ztb.mod2.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
