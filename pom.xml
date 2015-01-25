@@ -56,6 +56,22 @@
             <version>1.0</version>
             <systemPath>${basedir}/lib/ztb.mod2.jar</systemPath>
         </dependency>
+        
+        <dependency>
+            <groupId>Integration</groupId>
+            <artifactId>Integration</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/lib/Integration.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>Project_6_DAO-1.0.0</groupId>
+            <artifactId>Project_6_DAO-1.0.0</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/lib/Project_6_DAO-1.0.0.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
