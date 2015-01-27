@@ -51,16 +51,6 @@ public class ProfilesAndConfigurationsService {
 	}
 	
 	@GET
-	@Path(value = "/selectProfileByName2/{profileName}")
-	@Produces(value = MediaType.APPLICATION_JSON)
-	public Response selectProfileByName2(@PathParam(value = "profileName") String profileName) {
-		
-		Profile profile = new Profile(123L, "profilename", "normName", 123.444);
-		
-		return Response.ok(profile).build();
-	}
-	
-	@GET
 	@Path(value = "/selectProfileByID/{profileID}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response selectProfileByID(@PathParam(value = "profileID") Long profileID) {
