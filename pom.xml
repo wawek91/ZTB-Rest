@@ -50,8 +50,8 @@
             <systemPath>${basedir}/lib/ControlRules.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>ztbmod2</groupId>
-            <artifactId>ztbmod2</artifactId>
+            <groupId>ztb.mod2</groupId>
+            <artifactId>ztb.mod2</artifactId>
             <scope>system</scope>
             <version>1.0</version>
             <systemPath>${basedir}/lib/ztb.mod2.jar</systemPath>
@@ -66,11 +66,19 @@
         </dependency>
         
         <dependency>
-            <groupId>Project_6_DAO-1.0.0</groupId>
-            <artifactId>Project_6_DAO-1.0.0</artifactId>
+            <groupId>Project_6_DAO</groupId>
+            <artifactId>Project_6_DAO</artifactId>
             <scope>system</scope>
             <version>1.0</version>
-            <systemPath>${basedir}/lib/Project_6_DAO-1.0.0.jar</systemPath>
+            <systemPath>${basedir}/lib/Project_6_DAO.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jjjloger</groupId>
+            <artifactId>jjjloger</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/lib/jjjloger.jar</systemPath>
         </dependency>
     </dependencies>
     <build>
