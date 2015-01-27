@@ -51,7 +51,7 @@ public class ControlRulesService {
         }
     }
 
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/insert")
     public Response insertControlRule(String name) {
