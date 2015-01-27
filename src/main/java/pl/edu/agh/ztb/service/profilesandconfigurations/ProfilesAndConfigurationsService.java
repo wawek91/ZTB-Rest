@@ -12,8 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import loggers.enums.SourceType;
-import loggers.impl.RestLogger;
 import project.dao.ProfilesAndConfigurationsDAOImpl;
 import project.dao.data.Configuration;
 import project.dao.data.Profile;
@@ -23,207 +21,207 @@ import project.dao.interfaces.ProfilesAndConfigurationsDAO;
  * Profiles and configurations service
  * @author £ukasz.Gruba
  */
-@Path(value = "/profilesAndConfigurations")
+@Path(value = "/profiles_and_configurations")
 public class ProfilesAndConfigurationsService {
 
 	/**
 	 * Logger
 	 */
-	public RestLogger logger = new RestLogger();
+	//public RestLogger //logger = new RestLogger();
 	
-	private static final String SERVICE_NAME_PREFIX = "Executed service: /profilesAndConfigurations/";
+	private static final String SERVICE_NAME_PREFIX = "Executed service: /profiles_and_configurations/";
 	
 	@GET
-	@Path(value = "/selectProfileByName/{profileName}")
+	@Path(value = "/select_profile_by_name/{profileName}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response selectProfileByName(@PathParam(value = "profileName") String profileName) {
 		
-		String serviceName = "selectProfileByName";
+		String serviceName = "select_profile_by_name";
 		try {
 			Profile profile = ProfilesAndConfigurationsDaoManager.getDao().getProfile(profileName);
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
 			return Response.ok(profile).build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@GET
-	@Path(value = "/selectProfileByID/{profileID}")
+	@Path(value = "/select_profile_by_id/{profileID}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response selectProfileByID(@PathParam(value = "profileID") Long profileID) {
 		
-		String serviceName = "selectProfileByID";
+		String serviceName = "select_profile_by_id";
 		try {
 			Profile profile = ProfilesAndConfigurationsDaoManager.getDao().getProfile(profileID);
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileID));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileID));
 			return Response.ok(profile).build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileID));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileID));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@GET
-	@Path(value = "/selectProfilesList")
+	@Path(value = "/select_profiles_list")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response selectProfilesList() {
 		
-		String serviceName = "selectProfilesList";
+		String serviceName = "select_profiles_list";
 		try {
 			List<Profile> profilesList = ProfilesAndConfigurationsDaoManager.getDao().getProfilesList();
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null));
 			return Response.ok(profilesList).build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@POST
-	@Path(value = "/createProfile")
+	@Path(value = "/create_profile")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response addProfile(ProfileDto profile) {
 		
-		String serviceName = "createProfile";
+		String serviceName = "create_profile";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().addProfile(profile.getProfileName(), profile.getNormName(), profile.getAmbient());
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@POST
-	@Path(value = "/updateProfile")
+	@Path(value = "/update_profile")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response updateProfile(ProfileDto profile) {
 		
-		String serviceName = "updateProfile";
+		String serviceName = "update_profile";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().updateProfile(profile.getProfileName(), profile.getNormName(), profile.getAmbient());
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@DELETE
-	@Path(value = "/deleteProfile")
+	@Path(value = "/delete_profile")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response deleteProfile(String profileName) {
 		
-		String serviceName = "deleteProfile";
+		String serviceName = "delete_profile";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().deleteProfile(profileName);
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@GET
-	@Path(value = "/selectProfilesForSegment/{segmentID}")
+	@Path(value = "/select_profiles_for_segment/{segmentID}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response selectProfilesForSegment(@PathParam(value = "segmentID") Long segmentID) {
 		
-		String serviceName = "selectProfilesForSegment";
+		String serviceName = "select_profiles_for_segment";
 		try {
 			List<Profile> profiles = ProfilesAndConfigurationsDaoManager.getDao().getProfilesForSegment(segmentID);
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID));
 			return Response.ok(profiles).build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@GET
-	@Path(value = "/selectConfigurationForSegment/{segmentID}/{profileName}")
+	@Path(value = "/select_configuration_for_segment/{segmentID}/{profileName}")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response selectConfigForSegment(
 			@PathParam(value = "segmentID") Long segmentID,
 			@PathParam(value = "profileName") String profileName) {
 		
-		String serviceName = "selectConfigurationForSegment";
+		String serviceName = "select_configuration_for_segment";
 		try {
 			Configuration configuration = ProfilesAndConfigurationsDaoManager.getDao().getConfigForSegment(segmentID, profileName);
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID, profileName));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID, profileName));
 			return Response.ok(configuration).build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID, profileName));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID, profileName));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@POST
-	@Path(value = "/createConfigurationForSegment")
+	@Path(value = "/create_configuration_for_segment")
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response addConfigForSegment(SegmentDto segment) {
 		
-		String serviceName = "createConfigurationForSegment";
+		String serviceName = "create_configuration_for_segment";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().addConfigForSegment(segment.getSegmentId(), segment.getProfileName(), segment.getLamps());
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@POST
-	@Path(value = "/updateConfigurationForSegment")
+	@Path(value = "/update_configuration_for_segment")
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response updateConfigForSegment(SegmentDto segment) {
 		
-		String serviceName = "updateConfigurationForSegment";
+		String serviceName = "update_configuration_for_segment";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().updateConfigForSegment(segment.getSegmentId(), segment.getProfileName(), segment.getLamps());
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
 	@DELETE
-	@Path(value = "/deleteConfigurationForSegment")
+	@Path(value = "/delete_configuration_for_segment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response deleteConfigForSegment(SegmentDto segment) {
 		
-		String serviceName = "deleteConfigurationForSegment";
+		String serviceName = "delete_configuration_for_segment";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().deleteConfigForSegment(segment.getSegmentId(), segment.getProfileName());
-			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
+			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
+			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}

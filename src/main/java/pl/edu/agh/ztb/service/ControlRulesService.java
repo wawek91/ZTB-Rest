@@ -1,18 +1,23 @@
 package pl.edu.agh.ztb.service;
 
-import agh.db.ControlRuleDaoImpl;
-import loggers.enums.SourceType;
-import loggers.impl.RestLogger;
+import java.util.List;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+
+import agh.db.ControlRuleDaoImpl;
 
 @Path("/control_rules")
 public class ControlRulesService {
 
-    private static final RestLogger logger = new RestLogger();
+    //private static final RestLogger //logger = new RestLogger();
     
     @GET
     @Path("/select")
@@ -22,11 +27,11 @@ public class ControlRulesService {
         List<String> controlRuleList;
         try{
             controlRuleList = controlRuleDao.getAllControlRules();
-            logger.logSuccess(SourceType.MANUAL, "All Control Rules fetched");
+            //logger.logSuccess(SourceType.MANUAL, "All Control Rules fetched");
             return Response.ok(controlRuleList).build();
         }
         catch(Exception ex){
-            logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
@@ -39,14 +44,14 @@ public class ControlRulesService {
         try{
             String controlRule = controlRuleDao.getControlRule(name);
             if(controlRule == null){
-                logger.logFailure(SourceType.MANUAL, "Control Rule " + name + " not found");
+                //logger.logFailure(SourceType.MANUAL, "Control Rule " + name + " not found");
                 return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
             }
-            logger.logSuccess(SourceType.MANUAL, controlRule);
+            //logger.logSuccess(SourceType.MANUAL, controlRule);
             return Response.ok(controlRule).build();
         }
         catch(Exception ex){
-            logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
@@ -56,17 +61,17 @@ public class ControlRulesService {
     @Path("/insert")
     public Response insertControlRule(String name) {
         if(name == null || name.trim().isEmpty()){
-            logger.logFailure(SourceType.MANUAL, "Bad request");
+            //logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         ControlRuleDaoImpl controlRuleDao = new ControlRuleDaoImpl();
         try {
             controlRuleDao.addControlRule(name);
-            logger.logSuccess(SourceType.MANUAL, "Control Rule " + name + " inserted");
+            //logger.logSuccess(SourceType.MANUAL, "Control Rule " + name + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
-            logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
@@ -76,17 +81,17 @@ public class ControlRulesService {
     @Path("/delete")
     public Response deleteControlRule(String name) {
         if(name == null || name.trim().isEmpty()){
-            logger.logFailure(SourceType.MANUAL, "Bad request");
+            //logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         ControlRuleDaoImpl controlRuleDao = new ControlRuleDaoImpl();
         try {
             controlRuleDao.deleteControlRule(name);
-            logger.logSuccess(SourceType.MANUAL, "Control Rule " + name + " deleted");
+            //logger.logSuccess(SourceType.MANUAL, "Control Rule " + name + " deleted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
-            logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
 
