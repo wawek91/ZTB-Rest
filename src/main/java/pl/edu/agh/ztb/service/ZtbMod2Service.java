@@ -61,7 +61,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/cabinet/delete")
     public Response deleteCabinet(@FormParam("id") int id) {
         CabinetDaoImpl  cabinetDao = new CabinetDaoImpl ();
@@ -75,7 +75,7 @@ public class ZtbMod2Service {
 
     }
 
-    @PUT
+    @POST
     @Path("/cabinet/insert")
     public Response insertCabinet(@FormParam("cabinet") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -93,7 +93,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/cabinet/update")
     public Response updateCabinet(@FormParam("cabinet") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -157,7 +157,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/driver/delete")
     public Response deleteDriver(@FormParam("id") int id) {
         DriverDaoImpl  driverDao = new DriverDaoImpl ();
@@ -171,7 +171,7 @@ public class ZtbMod2Service {
 
     }
 
-    @PUT
+    @POST
     @Path("/driver/insert")
     public Response insertDriver(@FormParam("driver") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -189,7 +189,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/driver/update")
     public Response updateDriver(@FormParam("driver") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -268,7 +268,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/fixture/delete")
     public Response deleteFixture(@FormParam("id") int id) {
         FixturesDaoImpl  fixtureDao = new FixturesDaoImpl ();
@@ -282,7 +282,7 @@ public class ZtbMod2Service {
 
     }
 
-    @PUT
+    @POST
     @Path("/fixture/insert")
     public Response insertFixture(@FormParam("fixture") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -300,7 +300,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/fixture/update")
     public Response updateFixture(@FormParam("fixture") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -364,7 +364,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/segment/delete")
     public Response deleteSegment(@FormParam("id") int id) {
         SegmentControllersDaoImpl  segmentDao = new SegmentControllersDaoImpl ();
@@ -378,7 +378,7 @@ public class ZtbMod2Service {
 
     }
 
-    @PUT
+    @POST
     @Path("/segment/insert")
     public Response insertSegment(@FormParam("segment") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -396,7 +396,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/segment/update")
     public Response updateSegment(@FormParam("segment") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -475,7 +475,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/sensor/delete")
     public Response deleteSensor(@FormParam("id") int id) {
         SensorDaoImpl  sensorDao = new SensorDaoImpl ();
@@ -489,7 +489,7 @@ public class ZtbMod2Service {
 
     }
 
-    @PUT
+    @POST
     @Path("/sensor/insert")
     public Response insertSensor(@FormParam("sensor") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -507,7 +507,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/sensor/update")
     public Response updateSensor(@FormParam("sensor") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -525,7 +525,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/sensor/update/data")
     public Response updateSensorData(@FormParam("id") int id, @FormParam("data") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -602,7 +602,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/errors/delete")
     public Response deleteAllErrors() {
         ErrorDaoImpl  errorDao = new ErrorDaoImpl ();
@@ -615,7 +615,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/errors/delete/fixture/{id}")
     public Response deleteFixtureErrors(@FormParam("id") int id) {
         ErrorDaoImpl  errorDao = new ErrorDaoImpl ();
@@ -628,7 +628,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/errors/delete/driver/{id}")
     public Response deleteDriverErrors(@FormParam("id") int id) {
         ErrorDaoImpl  errorDao = new ErrorDaoImpl ();
@@ -641,7 +641,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/errors/insert/fixture")
     public Response insertFixtureError(@FormParam("error") String json) {
         if(json == null || json.trim().isEmpty()){
@@ -659,7 +659,7 @@ public class ZtbMod2Service {
         }
     }
 
-    @PUT
+    @POST
     @Path("/errors/insert/driver")
     public Response insertDriverError(@FormParam("error") String json) {
         if(json == null || json.trim().isEmpty()){

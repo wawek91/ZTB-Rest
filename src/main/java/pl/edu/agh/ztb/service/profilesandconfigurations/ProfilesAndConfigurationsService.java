@@ -3,7 +3,6 @@ package pl.edu.agh.ztb.service.profilesandconfigurations;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -129,7 +128,7 @@ public class ProfilesAndConfigurationsService {
 		}
 	}
 	
-	@DELETE
+	@POST
 	@Path(value = "/delete_profile")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
@@ -219,7 +218,7 @@ public class ProfilesAndConfigurationsService {
 		}
 	}
 	
-	@DELETE
+	@POST
 	@Path(value = "/delete_configuration_for_segment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
