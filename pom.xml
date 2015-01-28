@@ -88,6 +88,14 @@
             <version>1.0</version>
             <systemPath>${basedir}/lib/sensorsTypesDao.jar</systemPath>
         </dependency>
+
+        <dependency>
+            <groupId>requirements_model</groupId>
+            <artifactId>requirements_model</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/lib/requirements_model.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

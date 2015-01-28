@@ -1,18 +1,12 @@
 package pl.edu.agh.ztb.service;
 
-import java.util.List;
+import agh.db.ControlRuleDao;
+import agh.db.ControlRuleDaoImpl;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import agh.db.ControlRuleDaoImpl;
+import java.util.List;
 
 @Path("/control_rules")
 public class ControlRulesService {
@@ -23,7 +17,7 @@ public class ControlRulesService {
     @Path("/select")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getControlRules() {
-        ControlRuleDaoImpl controlRuleDao = new ControlRuleDaoImpl();
+        ControlRuleDao controlRuleDao = new ControlRuleDaoImpl();
         List<String> controlRuleList;
         try{
             controlRuleList = controlRuleDao.getAllControlRules();
@@ -40,7 +34,7 @@ public class ControlRulesService {
     @Path("/select/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getControlRuleByName(@PathParam("name") String name) {
-        ControlRuleDaoImpl controlRuleDao = new ControlRuleDaoImpl();
+        ControlRuleDao controlRuleDao = new ControlRuleDaoImpl();
         try{
             String controlRule = controlRuleDao.getControlRule(name);
             if(controlRule == null){
@@ -64,7 +58,7 @@ public class ControlRulesService {
             //logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
-        ControlRuleDaoImpl controlRuleDao = new ControlRuleDaoImpl();
+        ControlRuleDao controlRuleDao = new ControlRuleDaoImpl();
         try {
             controlRuleDao.addControlRule(name);
             //logger.logSuccess(SourceType.MANUAL, "Control Rule " + name + " inserted");
@@ -84,7 +78,7 @@ public class ControlRulesService {
             //logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
-        ControlRuleDaoImpl controlRuleDao = new ControlRuleDaoImpl();
+        ControlRuleDao controlRuleDao = new ControlRuleDaoImpl();
         try {
             controlRuleDao.deleteControlRule(name);
             //logger.logSuccess(SourceType.MANUAL, "Control Rule " + name + " deleted");

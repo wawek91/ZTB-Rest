@@ -1,25 +1,18 @@
 package pl.edu.agh.ztb.service.profilesandconfigurations;
 
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import project.dao.ProfilesAndConfigurationsDAOImpl;
 import project.dao.data.Configuration;
 import project.dao.data.Profile;
 import project.dao.interfaces.ProfilesAndConfigurationsDAO;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
+
 /**
  * Profiles and configurations service
- * @author £ukasz.Gruba
+ * @author Lukasz.Gruba
  */
 @Path(value = "/profiles_and_configurations")
 public class ProfilesAndConfigurationsService {
@@ -253,7 +246,7 @@ public class ProfilesAndConfigurationsService {
 	
 	/**
 	 * inner DAO manager
-	 * @author £ukasz.Gruba
+	 * @author Lukasz.Gruba
 	 */
 	private static class ProfilesAndConfigurationsDaoManager { 
 		
