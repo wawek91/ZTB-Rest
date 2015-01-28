@@ -1,14 +1,27 @@
 package pl.edu.agh.ztb.service.profilesandconfigurations;
 
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import loggers.enums.SourceType;
+import loggers.impl.RestLogger;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import project.dao.ProfilesAndConfigurationsDAOImpl;
 import project.dao.data.Configuration;
 import project.dao.data.Profile;
 import project.dao.interfaces.ProfilesAndConfigurationsDAO;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
 
 /**
  * Profiles and configurations service
@@ -20,7 +33,12 @@ public class ProfilesAndConfigurationsService {
 	/**
 	 * Logger
 	 */
-	//public RestLogger //logger = new RestLogger();
+	public RestLogger logger;
+	
+	public ProfilesAndConfigurationsService() {
+		ApplicationContext springContext = new ClassPathXmlApplicationContext("ztb7-context.xml");
+		logger = springContext.getBean(RestLogger.class);
+	}
 	
 	private static final String SERVICE_NAME_PREFIX = "Executed service: /profiles_and_configurations/";
 	
@@ -32,11 +50,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "select_profile_by_name";
 		try {
 			Profile profile = ProfilesAndConfigurationsDaoManager.getDao().getProfile(profileName);
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
 			return Response.ok(profile).build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -49,11 +67,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "select_profile_by_id";
 		try {
 			Profile profile = ProfilesAndConfigurationsDaoManager.getDao().getProfile(profileID);
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileID));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileID));
 			return Response.ok(profile).build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileID));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileID));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -66,11 +84,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "select_profiles_list";
 		try {
 			List<Profile> profilesList = ProfilesAndConfigurationsDaoManager.getDao().getProfilesList();
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null));
 			return Response.ok(profilesList).build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -84,11 +102,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "create_profile";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().addProfile(profile.getProfileName(), profile.getNormName(), profile.getAmbient());
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -102,11 +120,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "update_profile";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().updateProfile(profile.getProfileName(), profile.getNormName(), profile.getAmbient());
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profile));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profile));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -120,11 +138,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "delete_profile";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().deleteProfile(profileName);
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, profileName));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, profileName));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -137,11 +155,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "select_profiles_for_segment";
 		try {
 			List<Profile> profiles = ProfilesAndConfigurationsDaoManager.getDao().getProfilesForSegment(segmentID);
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID));
 			return Response.ok(profiles).build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -156,11 +174,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "select_configuration_for_segment";
 		try {
 			Configuration configuration = ProfilesAndConfigurationsDaoManager.getDao().getConfigForSegment(segmentID, profileName);
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID, profileName));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segmentID, profileName));
 			return Response.ok(configuration).build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID, profileName));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segmentID, profileName));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -174,11 +192,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "create_configuration_for_segment";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().addConfigForSegment(segment.getSegmentId(), segment.getProfileName(), segment.getLamps());
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -192,11 +210,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "update_configuration_for_segment";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().updateConfigForSegment(segment.getSegmentId(), segment.getProfileName(), segment.getLamps());
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -210,11 +228,11 @@ public class ProfilesAndConfigurationsService {
 		String serviceName = "delete_configuration_for_segment";
 		try {
 			ProfilesAndConfigurationsDaoManager.getDao().deleteConfigForSegment(segment.getSegmentId(), segment.getProfileName());
-			//logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
+			logger.logSuccess(SourceType.MANUAL, getLogMessage(serviceName, null, segment));
 			return Response.ok("OK").build();
 		}
 		catch(Exception e) {
-			//logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
+			logger.logFailure(SourceType.MANUAL, getLogMessage(serviceName, e, segment));
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}

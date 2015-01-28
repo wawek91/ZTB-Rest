@@ -1,5 +1,6 @@
 package pl.edu.agh.ztb.service;
 
+import java.util.Properties;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
@@ -12,6 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import loggers.enums.SourceType;
+import loggers.impl.RestLogger;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import pl.edu.agh.ztb.mod2.dao.SensorDao;
 import pl.edu.agh.ztb.mod2.dao.impl.SensorDaoImpl;
 import pl.edu.agh.ztb.mod2.model.Sensor;
@@ -19,7 +26,12 @@ import pl.edu.agh.ztb.mod2.model.Sensor;
 @Path("/sensors_types")
 public class SensorsTypesService {
 
-    //private static final RestLogger //logger = new RestLogger();
+    private RestLogger logger;
+    
+    public SensorsTypesService() {
+    	ApplicationContext springContext = new ClassPathXmlApplicationContext("ztb7-context.xml");
+		logger = springContext.getBean(RestLogger.class);
+    }
 
     @GET
     @Path("/select")
@@ -29,11 +41,11 @@ public class SensorsTypesService {
         Set<Sensor> sensors;
         try{
             sensors = sensorDao.getAllSensors();
-            //logger.logSuccess(SourceType.MANUAL, "All Sensors fetched");
+            logger.logSuccess(SourceType.MANUAL, "All Sensors fetched");
             return Response.ok(sensors).build();
         }
         catch(Exception ex){
-            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
@@ -46,14 +58,14 @@ public class SensorsTypesService {
         try{
             Sensor sensor = sensorDao.getSensor(id);
             if(sensor == null){
-                //logger.logFailure(SourceType.MANUAL, "Sensor " + id + " not found");
+                logger.logFailure(SourceType.MANUAL, "Sensor " + id + " not found");
                 return Response.status(Response.Status.NOT_FOUND).entity("Not found").build();
             }
-            //logger.logSuccess(SourceType.MANUAL, sensor.toString());
+            logger.logSuccess(SourceType.MANUAL, sensor.toString());
             return Response.ok(sensor).build();
         }
         catch(Exception ex){
-            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
@@ -61,19 +73,19 @@ public class SensorsTypesService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/insert")
-    public Response insertSensor(Sensor sensor) {
+    public Response insertSensor(SensorDto sensor) {
         if(sensor == null){
-            //logger.logFailure(SourceType.MANUAL, "Bad request");
+            logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SensorDao sensorDao= new SensorDaoImpl();
         try {
             sensorDao.insertSensor(sensor);
-            //logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " inserted");
+            logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
-            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
@@ -81,19 +93,19 @@ public class SensorsTypesService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/update")
-    public Response updateSensor(Sensor sensor) {
+    public Response updateSensor(SensorDto sensor) {
         if(sensor == null){
-            //logger.logFailure(SourceType.MANUAL, "Bad request");
+            logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SensorDao sensorDao= new SensorDaoImpl();
         try {
             sensorDao.updateSensor(sensor);
-            //logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " updated");
+            logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
-            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
@@ -103,17 +115,17 @@ public class SensorsTypesService {
     @Path("/delete")
     public Response deleteSensor(Integer id) {
         if(id == null) {
-            //logger.logFailure(SourceType.MANUAL, "Bad request");
+            logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SensorDao sensorDao= new SensorDaoImpl();
         try {
             sensorDao.deleteSensor(id);
-            //logger.logSuccess(SourceType.MANUAL, "Sensor " + id + " deleted");
+            logger.logSuccess(SourceType.MANUAL, "Sensor " + id + " deleted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
-            //logger.logFailure(SourceType.MANUAL, ex.getMessage());
+            logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
     }
