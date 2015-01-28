@@ -13,10 +13,7 @@ import javax.ws.rs.core.Response;
 
 import loggers.enums.SourceType;
 import loggers.impl.RestLogger;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import pl.edu.agh.ztb.service.managers.LoggerManager;
 import project.dao.ProfilesAndConfigurationsDAOImpl;
 import project.dao.data.Configuration;
 import project.dao.data.Profile;
@@ -35,8 +32,7 @@ public class ProfilesAndConfigurationsService {
 	public RestLogger logger;
 	
 	public ProfilesAndConfigurationsService() {
-		ApplicationContext springContext = new ClassPathXmlApplicationContext("ztb7-context.xml");
-		logger = springContext.getBean(RestLogger.class);
+		logger = LoggerManager.getLoggerInstance();
 	}
 	
 	private static final String SERVICE_NAME_PREFIX = "Executed service: /profiles_and_configurations/";

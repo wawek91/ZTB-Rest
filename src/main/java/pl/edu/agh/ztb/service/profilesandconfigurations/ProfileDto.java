@@ -1,12 +1,31 @@
 package pl.edu.agh.ztb.service.profilesandconfigurations;
 
+/**
+ * @author Lukasz.Gruba
+ */
 public class ProfileDto {
+	
+	private Long id;
 
 	private String profileName;
 	
 	private String normName;
 	
 	private Double ambient;
+	
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the profileName
