@@ -14,6 +14,7 @@ import pl.edu.agh.ztb.service.managers.LoggerManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.Timestamp;
 import java.util.Properties;
 import java.util.Set;
 
@@ -109,7 +110,8 @@ public class ZtbMod2Service {
         CabinetDaoImpl cabinetDao = new CabinetDaoImpl();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Cabinet cabinet = mapper.readValue(json, Cabinet.class);
+            CabinetTmp cabinetTmp = mapper.readValue(json, CabinetTmp.class);
+            Cabinet cabinet = new Cabinet(cabinetTmp.locationId, cabinetTmp.number);
             cabinetDao.insertCabinet(cabinet);
             logger.logSuccess(SourceType.MANUAL, "Cabinet " + cabinet.getId() + " inserted");
             return Response.ok("OK").build();
@@ -131,7 +133,8 @@ public class ZtbMod2Service {
         CabinetDaoImpl cabinetDao = new CabinetDaoImpl();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Cabinet cabinet = mapper.readValue(json, Cabinet.class);
+            CabinetTmp cabinetTmp = mapper.readValue(json, CabinetTmp.class);
+            Cabinet cabinet = new Cabinet(cabinetTmp.id, cabinetTmp.locationId, cabinetTmp.number);
             cabinetDao.updateCabinet(cabinet);
             logger.logSuccess(SourceType.MANUAL, "Cabinet " + cabinet.getId() + " updated");
             return Response.ok("OK").build();
@@ -222,7 +225,8 @@ public class ZtbMod2Service {
         DriverDaoImpl  driverDao = new DriverDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Driver driver = mapper.readValue(json, Driver.class);
+            DriverTmp driverTmp = mapper.readValue(json, DriverTmp.class);
+            Driver driver = new Driver(driverTmp.fixtureId, driverTmp.temperature, driverTmp.connectionQuality, driverTmp.systemTime, driverTmp.powerUsage, driverTmp.voltage, driverTmp.current, driverTmp.power, driverTmp.cosValue, driverTmp.zigbeeAddress, driverTmp.firmware, driverTmp.serialNumber, driverTmp.productType, driverTmp.deploymentDate, driverTmp.netState, driverTmp.dataAcceptanceState, driverTmp.parametrizationState, driverTmp.dataSearchingState);
             driverDao.insertDriver(driver);
             logger.logSuccess(SourceType.MANUAL, "Driver " + driver.getId() + " inserted");
             return Response.ok("OK").build();
@@ -244,7 +248,8 @@ public class ZtbMod2Service {
         DriverDaoImpl  driverDao = new DriverDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Driver driver = mapper.readValue(json, Driver.class);
+            DriverTmp driverTmp = mapper.readValue(json, DriverTmp.class);
+            Driver driver = new Driver(driverTmp.id, driverTmp.fixtureId, driverTmp.temperature, driverTmp.connectionQuality, driverTmp.systemTime, driverTmp.powerUsage, driverTmp.voltage, driverTmp.current, driverTmp.power, driverTmp.cosValue, driverTmp.zigbeeAddress, driverTmp.firmware, driverTmp.serialNumber, driverTmp.productType, driverTmp.deploymentDate, driverTmp.netState, driverTmp.dataAcceptanceState, driverTmp.parametrizationState, driverTmp.dataSearchingState);
             driverDao.updateDriver(driver);
             logger.logSuccess(SourceType.MANUAL, "Driver " + driver.getId() + " updated");
             return Response.ok("OK").build();
@@ -352,7 +357,8 @@ public class ZtbMod2Service {
         FixturesDaoImpl  fixtureDao = new FixturesDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Fixture fixture = mapper.readValue(json, Fixture.class);
+            FixtureTmp fixtureTmp = mapper.readValue(json, FixtureTmp.class);
+            Fixture fixture = new Fixture(fixtureTmp.location_id, fixtureTmp.segment_ctrl_id, fixtureTmp.actual_state, fixtureTmp.dim_level, fixtureTmp.hours_on, fixtureTmp.time_of_last_switch_on, fixtureTmp.time_of_last_switch_off, fixtureTmp.hid_status, fixtureTmp.device_type, fixtureTmp.ballasts_and_work_type, fixtureTmp.voltage_reset, fixtureTmp.min_dim_level) ;
             fixtureDao.insertFixture(fixture);
             logger.logSuccess(SourceType.MANUAL, "Fixture " + fixture.getId() + " inserted");
             return Response.ok("OK").build();
@@ -374,8 +380,9 @@ public class ZtbMod2Service {
         FixturesDaoImpl  fixtureDao = new FixturesDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Fixture fixture = mapper.readValue(json, Fixture.class);
-            fixtureDao.insertFixture(fixture);
+            FixtureTmp fixtureTmp = mapper.readValue(json, FixtureTmp.class);
+            Fixture fixture = new Fixture(fixtureTmp.id, fixtureTmp.location_id, fixtureTmp.segment_ctrl_id, fixtureTmp.actual_state, fixtureTmp.dim_level, fixtureTmp.hours_on, fixtureTmp.time_of_last_switch_on, fixtureTmp.time_of_last_switch_off, fixtureTmp.hid_status, fixtureTmp.device_type, fixtureTmp.ballasts_and_work_type, fixtureTmp.voltage_reset, fixtureTmp.min_dim_level) ;
+            fixtureDao.updateFixture(fixture);
             logger.logSuccess(SourceType.MANUAL, "Fixture " + fixture.getId() + " updated");
             return Response.ok("OK").build();
         }
@@ -465,7 +472,8 @@ public class ZtbMod2Service {
         SegmentControllersDaoImpl  segmentDao = new SegmentControllersDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            SegmentController segment = mapper.readValue(json, SegmentController.class);
+            SegmentControllerTmp segmentTmp = mapper.readValue(json, SegmentControllerTmp.class);
+            SegmentController segment = new SegmentController(segmentTmp.cabinet_id, segmentTmp.firmware, segmentTmp.product_code, segmentTmp.number);
             segmentDao.insertSegmentController(segment);
             logger.logSuccess(SourceType.MANUAL, "Segment " + segment.getId() + " inserted");
             return Response.ok("OK").build();
@@ -487,8 +495,9 @@ public class ZtbMod2Service {
         SegmentControllersDaoImpl  segmentDao = new SegmentControllersDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            SegmentController segment = mapper.readValue(json, SegmentController.class);
-            segmentDao.insertSegmentController(segment);
+            SegmentControllerTmp segmentTmp = mapper.readValue(json, SegmentControllerTmp.class);
+            SegmentController segment = new SegmentController(segmentTmp.id, segmentTmp.cabinet_id, segmentTmp.firmware, segmentTmp.product_code, segmentTmp.number);
+            segmentDao.updateSegmentController(segment);
             logger.logSuccess(SourceType.MANUAL, "Segment " + segment.getId() + " updated");
             return Response.ok("OK").build();
         }
@@ -595,7 +604,8 @@ public class ZtbMod2Service {
         SensorDaoImpl  sensorDao = new SensorDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Sensor sensor = mapper.readValue(json, Sensor.class);
+            SensorTmp sensorTmp = mapper.readValue(json, SensorTmp.class);
+            Sensor sensor = new Sensor(sensorTmp.segment_ctrl_id, sensorTmp.location_id, sensorTmp.sensor_type_id, sensorTmp.sensor_data);
             sensorDao.insertSensor(sensor);
             logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " inserted");
             return Response.ok("OK").build();
@@ -617,7 +627,8 @@ public class ZtbMod2Service {
         SensorDaoImpl  sensorDao = new SensorDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Sensor sensor = mapper.readValue(json, Sensor.class);
+            SensorTmp sensorTmp = mapper.readValue(json, SensorTmp.class);
+            Sensor sensor = new Sensor(sensorTmp.id, sensorTmp.segment_ctrl_id, sensorTmp.location_id, sensorTmp.sensor_type_id, sensorTmp.sensor_data);
             sensorDao.updateSensor(sensor);
             logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " updated");
             return Response.ok("OK").build();
@@ -639,9 +650,9 @@ public class ZtbMod2Service {
         SensorDaoImpl  sensorDao = new SensorDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            SensorDataDto sdd = mapper.readValue(json, SensorDataDto.class);
-            sensorDao.updateSensorData(sdd.id, sdd.data);
-            logger.logSuccess(SourceType.MANUAL, "Data of Sensor with id " + sdd.id + " updated");
+            SensorTmp sensorTmp = mapper.readValue(json, SensorTmp.class);
+            sensorDao.updateSensorData(sensorTmp.id, sensorTmp.sensor_data);
+            logger.logSuccess(SourceType.MANUAL, "Data of Sensor with id " + sensorTmp.id + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -776,7 +787,8 @@ public class ZtbMod2Service {
         ErrorDaoImpl  errorDao = new ErrorDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Error error = mapper.readValue(json, Error.class);
+            ErrorTmp errorTmp = mapper.readValue(json, ErrorTmp.class);
+            Error error = new Error(errorTmp.id, errorTmp.fixture_id, errorTmp.driver_id, errorTmp.timestamp, errorTmp.error_type);
             errorDao.insertFixtureError(error);
             logger.logSuccess(SourceType.MANUAL, "FixtureError " + error.getId() + " inserted");
             return Response.ok("OK").build();
@@ -798,7 +810,8 @@ public class ZtbMod2Service {
         ErrorDaoImpl  errorDao = new ErrorDaoImpl ();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Error error = mapper.readValue(json, Error.class);
+            ErrorTmp errorTmp = mapper.readValue(json, ErrorTmp.class);
+            Error error = new Error(errorTmp.id, errorTmp.fixture_id, errorTmp.driver_id, errorTmp.timestamp, errorTmp.error_type);
             errorDao.insertDriverError(error);
             logger.logSuccess(SourceType.MANUAL, "DriverError " + error.getId() + " inserted");
             return Response.ok("OK").build();
@@ -812,5 +825,85 @@ public class ZtbMod2Service {
     private class SensorDataDto {
         public int id;
         public Properties data;
+    }
+
+    private class CabinetTmp {
+        public int id;
+        public int locationId;
+        public String number;
+
+        public CabinetTmp(){}
+    }
+
+    private class DriverTmp {
+        public int id;
+        public int fixtureId;
+        public String temperature;
+        public String connectionQuality;
+        public Timestamp systemTime;
+        public String powerUsage;
+        public String voltage;
+        public String current;
+        public String power;
+        public String cosValue;
+        public String zigbeeAddress;
+        public String firmware;
+        public String serialNumber;
+        public String productType;
+        public Timestamp deploymentDate;
+        public String netState;
+        public String dataAcceptanceState;
+        public String parametrizationState;
+        public String dataSearchingState;
+
+        public DriverTmp(){}
+    }
+
+    private class FixtureTmp {
+        public int id;
+        public int location_id;
+        public int segment_ctrl_id;
+        public String actual_state;
+        public String dim_level;
+        public double hours_on;
+        public Timestamp time_of_last_switch_on;
+        public Timestamp time_of_last_switch_off;
+        public String hid_status;
+        public String device_type;
+        public String ballasts_and_work_type;
+        public String voltage_reset;
+        public String min_dim_level;
+
+        public FixtureTmp(){}
+    }
+
+    private class SegmentControllerTmp {
+        public int id;
+        public int cabinet_id;
+        public String firmware;
+        public String product_code;
+        public String number;
+
+        public SegmentControllerTmp(){}
+    }
+
+    private class SensorTmp {
+        public int id;
+        public int segment_ctrl_id;
+        public int location_id;
+        public int sensor_type_id;
+        public Properties sensor_data;
+
+        public SensorTmp(){}
+    }
+
+    private class ErrorTmp {
+        public int id;
+        public int fixture_id;
+        public int driver_id;
+        public Timestamp timestamp;
+        public String error_type;
+
+        public ErrorTmp(){}
     }
 }
