@@ -102,41 +102,35 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/cabinet/insert")
-    public Response insertCabinet(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response insertCabinet(CabinetTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         CabinetDaoImpl cabinetDao = new CabinetDaoImpl();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            CabinetTmp cabinetTmp = mapper.readValue(json, CabinetTmp.class);
-            Cabinet cabinet = new Cabinet(cabinetTmp.locationId, cabinetTmp.number);
-            cabinetDao.insertCabinet(cabinet);
-            logger.logSuccess(SourceType.MANUAL, "Cabinet " + cabinet.getId() + " inserted");
+            cabinetDao.insertCabinet(json);
+            logger.logSuccess(SourceType.MANUAL, "Cabinet " + json.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
             logger.logFailure(SourceType.MANUAL, ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown " + ex.getMessage()).build();
         }
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/cabinet/update")
-    public Response updateCabinet(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response updateCabinet(CabinetTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         CabinetDaoImpl cabinetDao = new CabinetDaoImpl();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            CabinetTmp cabinetTmp = mapper.readValue(json, CabinetTmp.class);
-            Cabinet cabinet = new Cabinet(cabinetTmp.id, cabinetTmp.locationId, cabinetTmp.number);
-            cabinetDao.updateCabinet(cabinet);
-            logger.logSuccess(SourceType.MANUAL, "Cabinet " + cabinet.getId() + " updated");
+            cabinetDao.updateCabinet(json);
+            logger.logSuccess(SourceType.MANUAL, "Cabinet " + json.getId() + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -217,18 +211,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/driver/insert")
-    public Response insertDriver(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response insertDriver(DriverTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         DriverDaoImpl  driverDao = new DriverDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            DriverTmp driverTmp = mapper.readValue(json, DriverTmp.class);
-            Driver driver = new Driver(driverTmp.fixtureId, driverTmp.temperature, driverTmp.connectionQuality, driverTmp.systemTime, driverTmp.powerUsage, driverTmp.voltage, driverTmp.current, driverTmp.power, driverTmp.cosValue, driverTmp.zigbeeAddress, driverTmp.firmware, driverTmp.serialNumber, driverTmp.productType, driverTmp.deploymentDate, driverTmp.netState, driverTmp.dataAcceptanceState, driverTmp.parametrizationState, driverTmp.dataSearchingState);
-            driverDao.insertDriver(driver);
-            logger.logSuccess(SourceType.MANUAL, "Driver " + driver.getId() + " inserted");
+            driverDao.insertDriver(json);
+            logger.logSuccess(SourceType.MANUAL, "Driver " + json.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -240,18 +231,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/driver/update")
-    public Response updateDriver(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response updateDriver(DriverTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         DriverDaoImpl  driverDao = new DriverDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            DriverTmp driverTmp = mapper.readValue(json, DriverTmp.class);
-            Driver driver = new Driver(driverTmp.id, driverTmp.fixtureId, driverTmp.temperature, driverTmp.connectionQuality, driverTmp.systemTime, driverTmp.powerUsage, driverTmp.voltage, driverTmp.current, driverTmp.power, driverTmp.cosValue, driverTmp.zigbeeAddress, driverTmp.firmware, driverTmp.serialNumber, driverTmp.productType, driverTmp.deploymentDate, driverTmp.netState, driverTmp.dataAcceptanceState, driverTmp.parametrizationState, driverTmp.dataSearchingState);
-            driverDao.updateDriver(driver);
-            logger.logSuccess(SourceType.MANUAL, "Driver " + driver.getId() + " updated");
+            driverDao.updateDriver(json);
+            logger.logSuccess(SourceType.MANUAL, "Driver " + json.getId() + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -343,24 +331,20 @@ public class ZtbMod2Service {
             logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
-
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/fixture/insert")
-    public Response insertFixture(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response insertFixture(FixtureTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         FixturesDaoImpl  fixtureDao = new FixturesDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            FixtureTmp fixtureTmp = mapper.readValue(json, FixtureTmp.class);
-            Fixture fixture = new Fixture(fixtureTmp.location_id, fixtureTmp.segment_ctrl_id, fixtureTmp.actual_state, fixtureTmp.dim_level, fixtureTmp.hours_on, fixtureTmp.time_of_last_switch_on, fixtureTmp.time_of_last_switch_off, fixtureTmp.hid_status, fixtureTmp.device_type, fixtureTmp.ballasts_and_work_type, fixtureTmp.voltage_reset, fixtureTmp.min_dim_level) ;
-            fixtureDao.insertFixture(fixture);
-            logger.logSuccess(SourceType.MANUAL, "Fixture " + fixture.getId() + " inserted");
+            fixtureDao.insertFixture(json);
+            logger.logSuccess(SourceType.MANUAL, "Fixture " + json.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -372,18 +356,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/fixture/update")
-    public Response updateFixture(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response updateFixture(FixtureTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         FixturesDaoImpl  fixtureDao = new FixturesDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            FixtureTmp fixtureTmp = mapper.readValue(json, FixtureTmp.class);
-            Fixture fixture = new Fixture(fixtureTmp.id, fixtureTmp.location_id, fixtureTmp.segment_ctrl_id, fixtureTmp.actual_state, fixtureTmp.dim_level, fixtureTmp.hours_on, fixtureTmp.time_of_last_switch_on, fixtureTmp.time_of_last_switch_off, fixtureTmp.hid_status, fixtureTmp.device_type, fixtureTmp.ballasts_and_work_type, fixtureTmp.voltage_reset, fixtureTmp.min_dim_level) ;
-            fixtureDao.updateFixture(fixture);
-            logger.logSuccess(SourceType.MANUAL, "Fixture " + fixture.getId() + " updated");
+            fixtureDao.updateFixture(json);
+            logger.logSuccess(SourceType.MANUAL, "Fixture " + json.getId() + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -464,18 +445,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/segment/insert")
-    public Response insertSegment(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response insertSegment(SegmentControllerTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SegmentControllersDaoImpl  segmentDao = new SegmentControllersDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            SegmentControllerTmp segmentTmp = mapper.readValue(json, SegmentControllerTmp.class);
-            SegmentController segment = new SegmentController(segmentTmp.cabinet_id, segmentTmp.firmware, segmentTmp.product_code, segmentTmp.number);
-            segmentDao.insertSegmentController(segment);
-            logger.logSuccess(SourceType.MANUAL, "Segment " + segment.getId() + " inserted");
+            segmentDao.insertSegmentController(json);
+            logger.logSuccess(SourceType.MANUAL, "Segment " + json.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -487,18 +465,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/segment/update")
-    public Response updateSegment(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response updateSegment(SegmentControllerTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SegmentControllersDaoImpl  segmentDao = new SegmentControllersDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            SegmentControllerTmp segmentTmp = mapper.readValue(json, SegmentControllerTmp.class);
-            SegmentController segment = new SegmentController(segmentTmp.id, segmentTmp.cabinet_id, segmentTmp.firmware, segmentTmp.product_code, segmentTmp.number);
-            segmentDao.updateSegmentController(segment);
-            logger.logSuccess(SourceType.MANUAL, "Segment " + segment.getId() + " updated");
+            segmentDao.updateSegmentController(json);
+            logger.logSuccess(SourceType.MANUAL, "Segment " + json.getId() + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -596,18 +571,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/sensor/insert")
-    public Response insertSensor(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response insertSensor(SensorTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SensorDaoImpl  sensorDao = new SensorDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            SensorTmp sensorTmp = mapper.readValue(json, SensorTmp.class);
-            Sensor sensor = new Sensor(sensorTmp.segment_ctrl_id, sensorTmp.location_id, sensorTmp.sensor_type_id, sensorTmp.sensor_data);
-            sensorDao.insertSensor(sensor);
-            logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " inserted");
+            sensorDao.insertSensor(json);
+            logger.logSuccess(SourceType.MANUAL, "Sensor " + json.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -619,18 +591,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/sensor/update")
-    public Response updateSensor(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response updateSensor(SensorTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SensorDaoImpl  sensorDao = new SensorDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            SensorTmp sensorTmp = mapper.readValue(json, SensorTmp.class);
-            Sensor sensor = new Sensor(sensorTmp.id, sensorTmp.segment_ctrl_id, sensorTmp.location_id, sensorTmp.sensor_type_id, sensorTmp.sensor_data);
-            sensorDao.updateSensor(sensor);
-            logger.logSuccess(SourceType.MANUAL, "Sensor " + sensor.getId() + " updated");
+            sensorDao.updateSensor(json);
+            logger.logSuccess(SourceType.MANUAL, "Sensor " + json.getId() + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -642,17 +611,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/sensor/update/data")
-    public Response updateSensorData(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response updateSensorData(SensorTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         SensorDaoImpl  sensorDao = new SensorDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            SensorTmp sensorTmp = mapper.readValue(json, SensorTmp.class);
-            sensorDao.updateSensorData(sensorTmp.id, sensorTmp.sensor_data);
-            logger.logSuccess(SourceType.MANUAL, "Data of Sensor with id " + sensorTmp.id + " updated");
+            sensorDao.updateSensorData(json.getId(), json.getSensor_data());
+            logger.logSuccess(SourceType.MANUAL, "Data of Sensor with id " + json.getId() + " updated");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -779,18 +746,15 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/errors/insert/fixture")
-    public Response insertFixtureError(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response insertFixtureError(ErrorTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         ErrorDaoImpl  errorDao = new ErrorDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            ErrorTmp errorTmp = mapper.readValue(json, ErrorTmp.class);
-            Error error = new Error(errorTmp.id, errorTmp.fixture_id, errorTmp.driver_id, errorTmp.timestamp, errorTmp.error_type);
-            errorDao.insertFixtureError(error);
-            logger.logSuccess(SourceType.MANUAL, "FixtureError " + error.getId() + " inserted");
+            errorDao.insertFixtureError(json);
+            logger.logSuccess(SourceType.MANUAL, "FixtureError " + json.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
@@ -802,108 +766,20 @@ public class ZtbMod2Service {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/errors/insert/driver")
-    public Response insertDriverError(String json) {
-        if(json == null || json.trim().isEmpty()){
+    public Response insertDriverError(ErrorTmp json) {
+        if(json == null){
             logger.logFailure(SourceType.MANUAL, "Bad request");
             return Response.status(Response.Status.BAD_REQUEST).entity("Bad parameter").build();
         }
         ErrorDaoImpl  errorDao = new ErrorDaoImpl ();
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            ErrorTmp errorTmp = mapper.readValue(json, ErrorTmp.class);
-            Error error = new Error(errorTmp.id, errorTmp.fixture_id, errorTmp.driver_id, errorTmp.timestamp, errorTmp.error_type);
-            errorDao.insertDriverError(error);
-            logger.logSuccess(SourceType.MANUAL, "DriverError " + error.getId() + " inserted");
+            errorDao.insertDriverError(json);
+            logger.logSuccess(SourceType.MANUAL, "DriverError " + json.getId() + " inserted");
             return Response.ok("OK").build();
         }
         catch(Exception ex){
             logger.logFailure(SourceType.MANUAL, ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Exception thrown").build();
         }
-    }
-
-    private class SensorDataDto {
-        public int id;
-        public Properties data;
-    }
-
-    private class CabinetTmp {
-        public int id;
-        public int locationId;
-        public String number;
-
-        public CabinetTmp(){}
-    }
-
-    private class DriverTmp {
-        public int id;
-        public int fixtureId;
-        public String temperature;
-        public String connectionQuality;
-        public Timestamp systemTime;
-        public String powerUsage;
-        public String voltage;
-        public String current;
-        public String power;
-        public String cosValue;
-        public String zigbeeAddress;
-        public String firmware;
-        public String serialNumber;
-        public String productType;
-        public Timestamp deploymentDate;
-        public String netState;
-        public String dataAcceptanceState;
-        public String parametrizationState;
-        public String dataSearchingState;
-
-        public DriverTmp(){}
-    }
-
-    private class FixtureTmp {
-        public int id;
-        public int location_id;
-        public int segment_ctrl_id;
-        public String actual_state;
-        public String dim_level;
-        public double hours_on;
-        public Timestamp time_of_last_switch_on;
-        public Timestamp time_of_last_switch_off;
-        public String hid_status;
-        public String device_type;
-        public String ballasts_and_work_type;
-        public String voltage_reset;
-        public String min_dim_level;
-
-        public FixtureTmp(){}
-    }
-
-    private class SegmentControllerTmp {
-        public int id;
-        public int cabinet_id;
-        public String firmware;
-        public String product_code;
-        public String number;
-
-        public SegmentControllerTmp(){}
-    }
-
-    private class SensorTmp {
-        public int id;
-        public int segment_ctrl_id;
-        public int location_id;
-        public int sensor_type_id;
-        public Properties sensor_data;
-
-        public SensorTmp(){}
-    }
-
-    private class ErrorTmp {
-        public int id;
-        public int fixture_id;
-        public int driver_id;
-        public Timestamp timestamp;
-        public String error_type;
-
-        public ErrorTmp(){}
     }
 }
